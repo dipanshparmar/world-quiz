@@ -35,8 +35,6 @@ class _SearchPageState extends State<SearchPage> {
   // variable to hold the search value
   String searchValue = "";
 
-  List<Country> resultedCountries = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

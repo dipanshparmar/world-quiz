@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/models.dart';
+import '../utils/enums/enums.dart';
 
 class CountriesProvider with ChangeNotifier {
   // list to hold the countries
-  List<Country> _countries = [];
+  final List<Country> _countries = [];
+
+  // list to hold the search results
+  List<Country> _searchResults = [];
 
   // method to load the countries
   Future<void> loadCountries() async {
@@ -89,8 +93,85 @@ class CountriesProvider with ChangeNotifier {
     }
   }
 
+  // method to get the countries according to a search type
+  void filterBy(SearchType searchType, String query) {
+    // trimming the query
+    query = query.trim();
+
+    // filtering and returning the countries according to the type
+    if (searchType == SearchType.country) {
+      _searchResults = _countries.where((e) {
+        // if both the names are null
+        if (e.officialName == null && e.commonName == null) {
+          return false;
+        }
+
+        // if official name is null but the common name is not
+        if (e.officialName == null && e.commonName != null) {
+          return e.commonName!.toLowerCase().contains(query.toLowerCase());
+        }
+
+        // if official name is not null but the common name is null
+        if (e.officialName != null && e.commonName == null) {
+          return e.officialName!.toLowerCase().contains(query.toLowerCase());
+        }
+
+        // if both the names are not null
+        return e.officialName!.toLowerCase().contains(query.toLowerCase()) ||
+            e.commonName!.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    } else if (searchType == SearchType.currency) {
+      _searchResults = _countries.where((e) {
+        // if currencies is empty then return false
+        if (e.currencies == null || e.currencies!.isEmpty) {
+          return false;
+        }
+
+        return e.currencies!.values.any((element) {
+          // if name is null then return false
+          if (element['name'] == null) {
+            return false;
+          }
+
+          // otherwise return the result accordingly
+          return element['name'].toLowerCase().contains(query.toLowerCase());
+        });
+      }).toList();
+    } else if (searchType == SearchType.capital) {
+      _searchResults = _countries.where((e) {
+        // if capital is null or is empty then return false
+        if (e.capitals == null || e.capitals!.isEmpty) {
+          return false;
+        }
+
+        return e.capitals!.any((capital) {
+          return capital.toLowerCase().contains(query.toLowerCase());
+        });
+      }).toList();
+    } else if (searchType == SearchType.language) {
+      _searchResults = _countries.where((e) {
+        if (e.languages == null || e.languages!.isEmpty) {
+          return false;
+        }
+
+        return e.languages!.values.any((language) {
+          return language.toLowerCase().contains(query.toLowerCase());
+        });
+      }).toList();
+    } else {
+      _searchResults = [];
+    }
+
+    notifyListeners();
+  }
+
   // getter to get the countries
   List<Country> getCountries() {
     return _countries;
+  }
+
+  // getter to get the search results
+  List<Country> getSearchResults() {
+    return _searchResults;
   }
 }

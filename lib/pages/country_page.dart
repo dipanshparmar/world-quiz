@@ -69,7 +69,12 @@ class CountryPage extends StatelessWidget {
                     ),
                   if (country.car != null &&
                       country.car!.isNotEmpty &&
-                      country.car!.containsKey('signs'))
+                      country.car!.containsKey('signs') &&
+                      // making sure there are no empty string to render
+                      (country.car!['signs'] as List)
+                          .where((e) => e.isNotEmpty)
+                          .toList()
+                          .isNotEmpty)
                     InfoSection(
                       heading: 'Car signs',
                       items: (country.car!['signs'] as List).map((e) {
@@ -151,7 +156,7 @@ class CountryPage extends StatelessWidget {
                     ),
                   if (country.idd != null && country.idd!.isNotEmpty)
                     InfoSection(
-                      heading: 'IDD perfix',
+                      heading: 'IDD prefix',
                       items: (country.idd!['suffixes'] as List).map((e) {
                         // getting the root
                         final String root = country.idd!['root'];
@@ -226,20 +231,28 @@ class CountryPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          officialName,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: Colors.white,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            officialName,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.white,
+            ),
           ),
         ),
         const SizedBox(
           height: 5,
         ),
-        Text(
-          commonName,
-          style: TextStyle(color: Colors.white.withOpacity(.8)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            commonName,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white.withOpacity(.8)),
+          ),
         )
       ],
     );
@@ -256,7 +269,11 @@ class CountryPage extends StatelessWidget {
     );
   }
 
-  Container getFloatingActionButton(BuildContext context, String? mapsUrl) {
+  Widget? getFloatingActionButton(BuildContext context, String? mapsUrl) {
+    if (mapsUrl == null) {
+      return null;
+    }
+
     return Container(
       height: 55,
       width: 55,
@@ -265,16 +282,17 @@ class CountryPage extends StatelessWidget {
           color: Theme.of(context).colorScheme.secondary,
           width: 2,
         ),
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(55),
       ),
       child: IconButton(
         icon: const Icon(Icons.map),
         iconSize: 22,
         color: Theme.of(context).colorScheme.secondary,
-        onPressed: mapsUrl != null
-            ? () => Navigator.of(context)
-                .pushNamed(WebView.routeName, arguments: mapsUrl)
-            : null,
+        onPressed: () {
+          Navigator.of(context)
+              .pushNamed(WebView.routeName, arguments: mapsUrl);
+        },
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/providers.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
+import './pages.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,7 +32,9 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Countries'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, SearchPage.routeName);
+            },
             icon: const Icon(Icons.search),
           ),
           IconButton(

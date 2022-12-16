@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/models.dart';
 import '../utils/enums/enums.dart';
@@ -220,95 +220,6 @@ class CountriesProvider with ChangeNotifier {
     return subregions;
   }
 
-  // function to get the min and max population
-  Map getMinMaxPopulation() {
-    // storing the min and the max population
-    int minPopulation = -1;
-    int maxPopulation = -1;
-
-    for (int i = 0; i < _countries.length; i++) {
-      // getting the current country's population
-      final int? currentCountryPopulation = _countries[i].population;
-
-      // if current country population is null then skip it
-      if (currentCountryPopulation == null) {
-        continue;
-      }
-
-      // setting the initial minPopulation
-      if (minPopulation == -1) {
-        minPopulation = currentCountryPopulation;
-      } else {
-        // if min population is not -1 then compare and set
-        if (currentCountryPopulation < minPopulation) {
-          minPopulation = currentCountryPopulation;
-        }
-      }
-
-      // if maxPopulation is -1 then set the intitial value
-      if (maxPopulation == -1) {
-        maxPopulation = currentCountryPopulation;
-      } else {
-        // if current population is greater than current max then update it
-        if (currentCountryPopulation > maxPopulation) {
-          maxPopulation = currentCountryPopulation;
-        }
-      }
-    }
-
-    return {
-      'min': minPopulation == -1 ? 0.0 : minPopulation.toDouble(),
-      'max': maxPopulation == -1 ? 0.0 : maxPopulation.toDouble(),
-    };
-  }
-
-  // method to get the min and the max area
-  Map getMinMaxArea() {
-    // storing the min and the max population
-    double minArea = -1;
-    double maxArea = -1;
-
-    for (int i = 0; i < _countries.length; i++) {
-      // getting the current country's population
-      final double? currentCountryArea = _countries[i].area;
-
-      // if current country population is null then skip it
-      if (currentCountryArea == null) {
-        continue;
-      }
-
-      // setting the initial minArea
-      if (minArea == -1) {
-        minArea = currentCountryArea;
-      } else {
-        // if current country area is negative then skip it
-        if (currentCountryArea < 0) {
-          continue;
-        }
-
-        // if min population is not -1 then compare and set
-        if (currentCountryArea < minArea) {
-          minArea = currentCountryArea;
-        }
-      }
-
-      // if maxArea is -1 then set the intitial value
-      if (maxArea == -1) {
-        maxArea = currentCountryArea;
-      } else {
-        // if current population is greater than current max then update it
-        if (currentCountryArea > maxArea) {
-          maxArea = currentCountryArea;
-        }
-      }
-    }
-
-    return {
-      'min': minArea == -1 ? 0 : minArea,
-      'max': maxArea == -1 ? 0 : maxArea,
-    };
-  }
-
   // function to apply a filter
   void applyFilter(FilterType filterType, String filterValue) {
     // if filter type is not one of the supposed, then throw an exception
@@ -346,8 +257,6 @@ class CountriesProvider with ChangeNotifier {
 
   // private function to update the filtered countries
   void _updateFilteredCountries() {
-    // TODO: ADD FOR RANGE SLIDERS
-
     _filteredCountries = _countries.where((country) {
       // getting the current country's continents
       final List? currentCountrysContinents = country.continents;
@@ -380,9 +289,8 @@ class CountriesProvider with ChangeNotifier {
     }).toList();
   }
 
-  // function to return true or false depening whether there are filters active or not
+  // method to return true or false depening whether there are filters active or not
   bool hasActiveFilters() {
-    // TODO: ADD FOR RANGE SLIDERS
     return _activeFilters[FilterType.continent]!.isNotEmpty ||
         _activeFilters[FilterType.subRegion]!.isNotEmpty;
   }

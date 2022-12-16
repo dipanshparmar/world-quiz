@@ -152,20 +152,13 @@ class _HomePageState extends State<HomePage> {
                   width: double.infinity,
                   child: Consumer<CountriesProvider>(
                     builder: ((context, value, child) {
-                      // getting the min and the max values for the population
-                      final Map minAndMaxPopulation =
-                          value.getMinMaxPopulation();
-
-                      // getting the min and the max values for the area
-                      final Map minAndMaxArea = value.getMinMaxArea();
-
                       return SingleChildScrollView(
                         padding: const EdgeInsets.only(bottom: 20),
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Heading('Continent'),
+                            const Heading('Continents'),
                             const SizedBox(
                               height: 10,
                             ),
@@ -187,33 +180,6 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(
                               height: 20,
                             ),
-                            const Heading('Area'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: AreaRangeSlider(
-                                min: minAndMaxArea['min'],
-                                max: minAndMaxArea['max'],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Heading('Population'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: PopulationRangeSlider(
-                                min: minAndMaxPopulation['min'],
-                                max: minAndMaxPopulation['max'],
-                              ),
-                            )
                           ],
                         ),
                       );
@@ -254,8 +220,6 @@ class Options extends StatefulWidget {
 }
 
 class _OptionsState extends State<Options> {
-  // TODO: INSTEAD OF ACTIVE INDEXES, CHECK FOR TEXT IN ACTIVE FILTER, IF YES THEN IT IS ACTIVE, OTHERWISE NOT
-
   @override
   Widget build(BuildContext context) {
     return Consumer<CountriesProvider>(
@@ -318,114 +282,6 @@ class _OptionsState extends State<Options> {
           ),
         );
       }),
-    );
-  }
-}
-
-class AreaRangeSlider extends StatefulWidget {
-  const AreaRangeSlider({
-    required this.min,
-    required this.max,
-    super.key,
-  });
-
-  final double min;
-  final double max;
-
-  @override
-  State<AreaRangeSlider> createState() => _AreaRangeSliderState();
-}
-
-class _AreaRangeSliderState extends State<AreaRangeSlider> {
-  late RangeValues values;
-
-  @override
-  void initState() {
-    super.initState();
-
-    values = RangeValues(widget.min, widget.max);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        RangeSlider(
-          values: values,
-          min: widget.min,
-          max: widget.max,
-          activeColor: Theme.of(context).colorScheme.secondary,
-          inactiveColor:
-              Theme.of(context).colorScheme.secondary.withOpacity(.2),
-          onChanged: ((value) {
-            setState(() {
-              values = value;
-            });
-          }),
-        ),
-        Text(
-          '${values.start.toStringAsFixed(2)} - ${values.end.toStringAsFixed(2)} Sq. Km.',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class PopulationRangeSlider extends StatefulWidget {
-  const PopulationRangeSlider({
-    required this.min,
-    required this.max,
-    super.key,
-  });
-
-  final double min;
-  final double max;
-
-  @override
-  State<PopulationRangeSlider> createState() => _PopulationRangeSliderState();
-}
-
-class _PopulationRangeSliderState extends State<PopulationRangeSlider> {
-  // creating the range values
-  late RangeValues values;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // initializing the values
-    values = RangeValues(widget.min, widget.max);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        RangeSlider(
-          values: values,
-          activeColor: Theme.of(context).colorScheme.secondary,
-          inactiveColor:
-              Theme.of(context).colorScheme.secondary.withOpacity(.2),
-          min: widget.min,
-          max: widget.max,
-          onChanged: (value) {
-            setState(() {
-              values = value;
-            });
-          },
-        ),
-        Text(
-          '${(values.start / 1000000).toStringAsFixed(2)} - ${(values.end / 1000000).toStringAsFixed(2)} M',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ],
     );
   }
 }

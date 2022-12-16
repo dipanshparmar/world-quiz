@@ -12,6 +12,15 @@ class CountriesProvider with ChangeNotifier {
   // list to hold the search results
   List<Country> _searchResults = [];
 
+  // list to hold the filtered countries
+  List<Country> _filteredCountries = [];
+
+  // storing the active filters
+  final Map<FilterType, List<String>> _activeFilters = {
+    FilterType.continent: [],
+    FilterType.subRegion: [],
+  };
+
   // method to load the countries
   Future<void> loadCountries() async {
     // making a http request
@@ -165,6 +174,219 @@ class CountriesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // method to get the continents
+  List<String> getContinents() {
+    // list to hold the continents
+    List<String> continents = [];
+
+    // going through all the countries
+    for (int i = 0; i < _countries.length; i++) {
+      // getting the continents of current country
+      final List? conts = _countries[i].continents;
+
+      // if conts is not null and not empty then iterate over them
+      if (conts != null && conts.isNotEmpty) {
+        for (int i = 0; i < conts.length; i++) {
+          // if current continent is not already in the list of continents then add it
+          if (!continents.contains(conts[i])) {
+            continents.add(conts[i]);
+          }
+        }
+      }
+    }
+
+    return continents;
+  }
+
+  // method to get the regions
+  List<String> getSubregions() {
+    // list to store the regions
+    List<String> subregions = [];
+
+    // running a for loop for the length of the countries times
+    for (int i = 0; i < _countries.length; i++) {
+      // getting the current countries' regions
+      final String? subregion = _countries[i].subregion;
+
+      // if region is not null and not an empty string
+      if (subregion != null && subregion.isNotEmpty) {
+        // adding the subregion to the list if not already present
+        if (!subregions.contains(subregion)) {
+          subregions.add(subregion);
+        }
+      }
+    }
+
+    return subregions;
+  }
+
+  // function to get the min and max population
+  Map getMinMaxPopulation() {
+    // storing the min and the max population
+    int minPopulation = -1;
+    int maxPopulation = -1;
+
+    for (int i = 0; i < _countries.length; i++) {
+      // getting the current country's population
+      final int? currentCountryPopulation = _countries[i].population;
+
+      // if current country population is null then skip it
+      if (currentCountryPopulation == null) {
+        continue;
+      }
+
+      // setting the initial minPopulation
+      if (minPopulation == -1) {
+        minPopulation = currentCountryPopulation;
+      } else {
+        // if min population is not -1 then compare and set
+        if (currentCountryPopulation < minPopulation) {
+          minPopulation = currentCountryPopulation;
+        }
+      }
+
+      // if maxPopulation is -1 then set the intitial value
+      if (maxPopulation == -1) {
+        maxPopulation = currentCountryPopulation;
+      } else {
+        // if current population is greater than current max then update it
+        if (currentCountryPopulation > maxPopulation) {
+          maxPopulation = currentCountryPopulation;
+        }
+      }
+    }
+
+    return {
+      'min': minPopulation == -1 ? 0.0 : minPopulation.toDouble(),
+      'max': maxPopulation == -1 ? 0.0 : maxPopulation.toDouble(),
+    };
+  }
+
+  // method to get the min and the max area
+  Map getMinMaxArea() {
+    // storing the min and the max population
+    double minArea = -1;
+    double maxArea = -1;
+
+    for (int i = 0; i < _countries.length; i++) {
+      // getting the current country's population
+      final double? currentCountryArea = _countries[i].area;
+
+      // if current country population is null then skip it
+      if (currentCountryArea == null) {
+        continue;
+      }
+
+      // setting the initial minArea
+      if (minArea == -1) {
+        minArea = currentCountryArea;
+      } else {
+        // if current country area is negative then skip it
+        if (currentCountryArea < 0) {
+          continue;
+        }
+
+        // if min population is not -1 then compare and set
+        if (currentCountryArea < minArea) {
+          minArea = currentCountryArea;
+        }
+      }
+
+      // if maxArea is -1 then set the intitial value
+      if (maxArea == -1) {
+        maxArea = currentCountryArea;
+      } else {
+        // if current population is greater than current max then update it
+        if (currentCountryArea > maxArea) {
+          maxArea = currentCountryArea;
+        }
+      }
+    }
+
+    return {
+      'min': minArea == -1 ? 0 : minArea,
+      'max': maxArea == -1 ? 0 : maxArea,
+    };
+  }
+
+  // function to apply a filter
+  void applyFilter(FilterType filterType, String filterValue) {
+    // if filter type is not one of the supposed, then throw an exception
+    if (!(filterType == FilterType.continent ||
+        filterType == FilterType.subRegion)) {
+      throw TypeError();
+    }
+
+    // otherwise add the filter to the active filters
+    _activeFilters[filterType]!.add(filterValue);
+
+    // updating the filtered countries
+    _updateFilteredCountries();
+
+    // notifying the listeners
+    notifyListeners();
+  }
+
+  void removeFilter(FilterType filterType, String filterValue) {
+    // if filter type is not the supported one then throw an exception
+    if (!(filterType == FilterType.continent ||
+        filterType == FilterType.subRegion)) {
+      throw TypeError();
+    }
+
+    // otherwise removing the filter from the active filters
+    _activeFilters[filterType]!.remove(filterValue);
+
+    // updating the filtered countries
+    _updateFilteredCountries();
+
+    // notifying the listeners
+    notifyListeners();
+  }
+
+  // private function to update the filtered countries
+  void _updateFilteredCountries() {
+    // TODO: ADD FOR RANGE SLIDERS
+
+    _filteredCountries = _countries.where((country) {
+      // getting the current country's continents
+      final List? currentCountrysContinents = country.continents;
+
+      // if current country's any continent matches with the filter continents then return true
+      if (currentCountrysContinents != null) {
+        // if the filter continents has any of the current country's continent matching then return true
+        bool hasAny = currentCountrysContinents.any((continent) {
+          return _activeFilters[FilterType.continent]!.contains(continent);
+        });
+
+        // if has any then return true
+        if (hasAny) {
+          return true;
+        }
+      }
+
+      // getting the subregion
+      final String? subregion = country.subregion;
+
+      // if current country's sub region matches with the filter subregions then return true
+      if (subregion != null) {
+        if (_activeFilters[FilterType.subRegion]!.contains(subregion)) {
+          return true;
+        }
+      }
+
+      // return false if none of the filtered match above
+      return false;
+    }).toList();
+  }
+
+  // function to return true or false depening whether there are filters active or not
+  bool hasActiveFilters() {
+    // TODO: ADD FOR RANGE SLIDERS
+    return _activeFilters[FilterType.continent]!.isNotEmpty ||
+        _activeFilters[FilterType.subRegion]!.isNotEmpty;
+  }
+
   // getter to get the countries
   List<Country> getCountries() {
     return _countries;
@@ -173,5 +395,15 @@ class CountriesProvider with ChangeNotifier {
   // getter to get the search results
   List<Country> getSearchResults() {
     return _searchResults;
+  }
+
+  // getter to get the filtered countries
+  List<Country> getFilteredCountries() {
+    return _filteredCountries;
+  }
+
+  // getter to get the active filters
+  Map getActiveFilters() {
+    return _activeFilters;
   }
 }

@@ -46,10 +46,11 @@ class CountryPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InfoSection(
-                    heading: 'Area',
-                    items: ['${country.area} sq. Km.'],
-                  ),
+                  if (country.area != null && country.area! > 0)
+                    InfoSection(
+                      heading: 'Area',
+                      items: ['${country.area} Sq. Km.'],
+                    ),
                   if (country.borders != null && country.borders!.isNotEmpty)
                     InfoSection(
                       heading: 'Border(s)',

@@ -105,6 +105,11 @@ class CountriesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // getter to get the status of data
+  bool isDataLoaded() {
+    return _countries.isNotEmpty;
+  }
+
   // method to get the countries according to a search type
   void filterBy(SearchType searchType, String query) {
     // trimming the query

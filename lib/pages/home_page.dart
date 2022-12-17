@@ -37,37 +37,60 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Countries'),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, SearchPage.routeName);
-            },
-            icon: const Icon(Icons.search),
+          Consumer<CountriesProvider>(
+            builder: ((context, value, child) {
+              bool isDataLoaded = value.isDataLoaded();
+
+              return IconButton(
+                onPressed: isDataLoaded
+                    ? () {
+                        Navigator.pushNamed(context, SearchPage.routeName);
+                      }
+                    : null,
+                icon: Icon(
+                  Icons.search,
+                  color: isDataLoaded ? null : kDisabledIconColor,
+                ),
+              );
+            }),
           ),
           Consumer<CountriesProvider>(
             builder: (context, value, child) {
-              return Stack(
-                alignment: Alignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      getModalBottomSheet(context);
-                    },
-                    icon: const Icon(Icons.filter_list),
-                  ),
-                  if (value.hasActiveFilters())
-                    Positioned(
-                      top: 15,
-                      right: 10,
-                      child: Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+              // getting the data status
+              bool isDataLoaded = value.isDataLoaded();
+
+              return AbsorbPointer(
+                absorbing:
+                    !isDataLoaded, // if data is not loaded then absorb, else not
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: isDataLoaded
+                          ? () {
+                              getModalBottomSheet(context);
+                            }
+                          : null,
+                      icon: Icon(
+                        Icons.filter_list,
+                        color: isDataLoaded ? null : kDisabledIconColor,
                       ),
-                    )
-                ],
+                    ),
+                    if (value.hasActiveFilters())
+                      Positioned(
+                        top: 15,
+                        right: 10,
+                        child: Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      )
+                  ],
+                ),
               );
             },
           ),
@@ -94,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     snapshot.error is SocketException
-                        ? socketErrorText
+                        ? kSocketErrorText
                         : 'An error occurred while fetching the data!',
                     textAlign: TextAlign.center,
                   ),

@@ -145,6 +145,13 @@ class _SearchPageState extends State<SearchPage> {
                       final List<Country> searchResults =
                           value.getSearchResults();
 
+                      // if search results are empty then show an empty message instead
+                      if (searchResults.isEmpty) {
+                        return const Center(
+                          child: Text('No results found for your search!'),
+                        );
+                      }
+
                       return ListView.builder(
                         itemCount: searchResults.length,
                         itemBuilder: ((context, index) {

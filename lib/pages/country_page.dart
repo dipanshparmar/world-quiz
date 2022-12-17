@@ -232,7 +232,9 @@ class CountryPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: getFloatingActionButton(context, country.mapsUrl),
+      floatingActionButton: country.mapsUrl != null
+          ? getFloatingActionButton(context, country.mapsUrl)
+          : null,
     );
   }
 

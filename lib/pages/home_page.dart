@@ -94,6 +94,13 @@ class _HomePageState extends State<HomePage> {
                       ? value.getCountries()
                       : value.getFilteredCountries();
 
+              // if countries is empty then just return the text
+              if (countries.isEmpty) {
+                return const Center(
+                  child: Text('No countries found!'),
+                );
+              }
+
               // returning the listview
               return ListView.builder(
                 physics: const BouncingScrollPhysics(),

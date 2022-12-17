@@ -36,7 +36,7 @@ class CountryPage extends StatelessWidget {
             if (country.flagUrl != null)
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 40),
-                height: 200,
+                height: 150,
                 width: double.infinity,
                 child: getNetworkImage(country.flagUrl!),
               ),

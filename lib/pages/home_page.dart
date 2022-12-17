@@ -26,10 +26,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    // updating the loading texts
-    Provider.of<LoadingTextsProvider>(context, listen: false)
-        .updateTextPeriodically();
-
     // setting the future
     _future =
         Provider.of<CountriesProvider>(context, listen: false).loadCountries();
@@ -113,18 +109,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
-                Consumer<LoadingTextsProvider>(
-                  builder: (context, value, child) {
-                    return Text(
-                      value.getActiveText(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  },
-                )
+                const Text(
+                  'Getting your data. Please hang on!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             );
           }

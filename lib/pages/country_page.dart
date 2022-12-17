@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../models/country.dart';
 import '../widgets/widgets.dart';
 import './pages.dart';
+import '../utils/functions/functions.dart';
 
 class CountryPage extends StatelessWidget {
   const CountryPage({super.key});
@@ -30,7 +33,13 @@ class CountryPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            if (country.flagUrl != null) getCountryImage(country.flagUrl!),
+            if (country.flagUrl != null)
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                height: 200,
+                width: double.infinity,
+                child: getNetworkImage(country.flagUrl!),
+              ),
             const SizedBox(
               height: 40,
             ),
@@ -94,9 +103,7 @@ class CountryPage extends StatelessWidget {
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           height: 150,
                           width: double.infinity,
-                          child: Image.network(
-                            country.coatOfArms!,
-                          ),
+                          child: getNetworkImage(country.coatOfArms!),
                         ),
                         const SizedBox(
                           height: 20,
@@ -228,6 +235,47 @@ class CountryPage extends StatelessWidget {
     );
   }
 
+  Image getNetworkImage(String url) {
+    return Image.network(
+      url,
+      loadingBuilder: (context, child, loadingProgress) {
+        // if there is no loading progress then return the child as loading has been done
+        if (loadingProgress == null) {
+          return child;
+        }
+
+        // getting the current progress and the total bytes
+        final int current = loadingProgress.cumulativeBytesLoaded;
+        final int? total = loadingProgress.expectedTotalBytes;
+
+        return Center(
+          child: Text(
+            total == null
+                ? 'Loading . . .'
+                : '${getPercentage(current, total).toStringAsFixed(2)} %',
+            style: TextStyle(
+              color: Colors.white.withOpacity(.8),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      },
+      errorBuilder: ((context, error, stackTrace) {
+        // returning a message according to the exception
+        return Center(
+          child: Text(
+            error.runtimeType == SocketException
+                ? 'Couldn\'t connect to the Internet.'
+                : 'Error while loading the image!',
+            style: TextStyle(
+              color: Colors.white.withOpacity(.8),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
   Column getCountryNames(String officialName, String commonName) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -256,17 +304,6 @@ class CountryPage extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-
-  Container getCountryImage(String flagUrl) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
-      height: 200,
-      width: double.infinity,
-      child: Image.network(
-        flagUrl,
-      ),
     );
   }
 

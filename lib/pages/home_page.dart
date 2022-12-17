@@ -26,6 +26,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    // updating the loading texts
+    Provider.of<LoadingTextsProvider>(context, listen: false)
+        .updateTextPeriodically();
+
     // setting the future
     _future =
         Provider.of<CountriesProvider>(context, listen: false).loadCountries();
@@ -100,10 +104,28 @@ class _HomePageState extends State<HomePage> {
         future: _future,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Consumer<LoadingTextsProvider>(
+                  builder: (context, value, child) {
+                    return Text(
+                      value.getActiveText(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
+                )
+              ],
             );
           }
 

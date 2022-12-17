@@ -26,8 +26,11 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    return ChangeNotifierProvider(
-      create: (context) => CountriesProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CountriesProvider()),
+        ChangeNotifierProvider(create: (context) => LoadingTextsProvider())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: theme.copyWith(

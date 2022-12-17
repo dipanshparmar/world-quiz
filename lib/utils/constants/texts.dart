@@ -1,2 +1,2 @@
-const String socketErrorText =
+const String kSocketErrorText =
     'Either no Internet connection or the server is down.';

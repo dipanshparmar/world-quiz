@@ -1,1 +1,2 @@
-export './text.dart';
+export 'texts.dart';
+export 'colors.dart';

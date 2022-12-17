@@ -5,6 +5,7 @@ import '../models/country.dart';
 import '../widgets/widgets.dart';
 import './pages.dart';
 import '../utils/functions/functions.dart';
+import '../utils/constants/constants.dart';
 
 class CountryPage extends StatelessWidget {
   const CountryPage({super.key});
@@ -264,9 +265,10 @@ class CountryPage extends StatelessWidget {
         // returning a message according to the exception
         return Center(
           child: Text(
-            error.runtimeType == SocketException
-                ? 'Couldn\'t connect to the Internet.'
+            error is SocketException
+                ? socketErrorText
                 : 'Error while loading the image!',
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white.withOpacity(.8),
             ),

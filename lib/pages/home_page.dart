@@ -1,13 +1,18 @@
-import 'package:countries/utils/enums/enums.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/providers.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
 import './pages.dart';
+import '../utils/enums/enums.dart';
+import '../utils/constants/constants.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  static const String routeName = '/home-page';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -70,7 +75,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: FutureBuilder(
         future: _future,
-        builder: ((context, snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(
@@ -81,9 +86,37 @@ class _HomePageState extends State<HomePage> {
 
           // if we have an error
           if (snapshot.hasError) {
-            print(snapshot.error);
-            // TODO
-            return Text('An error occurred');
+            return Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    snapshot.error is SocketException
+                        ? socketErrorText
+                        : 'An error occurred while fetching the data!',
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomePage.routeName);
+                    },
+                    child: Text(
+                      'Retry',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
           } else {
             // if we have the data then access it and list it
             return Consumer<CountriesProvider>(
@@ -114,7 +147,7 @@ class _HomePageState extends State<HomePage> {
               );
             });
           }
-        }),
+        },
       ),
     );
   }
@@ -208,87 +241,6 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.secondary,
         width: 2,
       ),
-    );
-  }
-}
-
-class Options extends StatefulWidget {
-  const Options({
-    required this.items,
-    required this.filterType,
-    super.key,
-  });
-
-  final List items;
-  final FilterType filterType;
-
-  @override
-  State<Options> createState() => _OptionsState();
-}
-
-class _OptionsState extends State<Options> {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<CountriesProvider>(
-      builder: ((context, value, child) {
-        // getting the active filters
-        final Map activeFilters = value.getActiveFilters();
-
-        // getting the list of the active values according to the type
-        List values = activeFilters[widget.filterType];
-
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Wrap(
-            runSpacing: 10,
-            spacing: 10,
-            children: widget.items.asMap().keys.map((e) {
-              // getting the current text value
-              final String textValue = widget.items[e];
-
-              // is selected
-              final bool isSelected = values.contains(textValue);
-
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (!isSelected) {
-                      // applying the filter
-                      value.applyFilter(widget.filterType, textValue);
-                    } else {
-                      // removing the filter
-                      value.removeFilter(widget.filterType, textValue);
-                    }
-                  });
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    widget.items[e],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? Colors.black : Colors.white,
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        );
-      }),
     );
   }
 }

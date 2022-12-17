@@ -268,7 +268,7 @@ class CountryPage extends StatelessWidget {
         return Center(
           child: Text(
             error is SocketException
-                ? socketErrorText
+                ? kSocketErrorText
                 : 'Error while loading the image!',
             textAlign: TextAlign.center,
             style: TextStyle(

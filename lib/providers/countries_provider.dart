@@ -100,6 +100,9 @@ class CountriesProvider with ChangeNotifier {
       // adding the country to the list
       _countries.add(country);
     }
+
+    // notifying the listeners
+    notifyListeners();
   }
 
   // method to get the countries according to a search type

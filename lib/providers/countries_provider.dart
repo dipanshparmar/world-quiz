@@ -297,6 +297,19 @@ class CountriesProvider with ChangeNotifier {
     }).toList();
   }
 
+  // method to clear the filters
+  void clearFilters() {
+    // emptying the filters
+    _activeFilters[FilterType.continent] = [];
+    _activeFilters[FilterType.subRegion] = [];
+
+    // updating the countries
+    _updateFilteredCountries();
+
+    // notifying the listeners
+    notifyListeners();
+  }
+
   // method to return true or false depening whether there are filters active or not
   bool hasActiveFilters() {
     return _activeFilters[FilterType.continent]!.isNotEmpty ||

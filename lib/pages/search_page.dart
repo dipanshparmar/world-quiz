@@ -153,6 +153,7 @@ class _SearchPageState extends State<SearchPage> {
                       }
 
                       return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
                         itemCount: searchResults.length,
                         itemBuilder: ((context, index) {
                           return CountryTile(index + 1, searchResults[index]);

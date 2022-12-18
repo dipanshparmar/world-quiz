@@ -43,6 +43,7 @@ class CountriesProvider with ChangeNotifier {
       final String? commonName = current['name']['common'];
       final String? officialName = current['name']['official'];
       final List? tlds = current['tld'];
+      final String? countryCode = current['cca3'];
       final bool? independent = current['independent'];
       final bool? unMember = current['unMember'];
       final Map? currencies = current['currencies'];
@@ -72,6 +73,7 @@ class CountriesProvider with ChangeNotifier {
         commonName: commonName,
         officialName: officialName,
         tlds: tlds,
+        code: countryCode,
         independent: independent,
         unMember: unMember,
         currencies: currencies,
@@ -334,5 +336,21 @@ class CountriesProvider with ChangeNotifier {
   // getter to get the active filters
   Map getActiveFilters() {
     return _activeFilters;
+  }
+
+  // method to get the name of the country by code
+  Country? getCountryByCode(String code) {
+    // going through all the countries
+    for (int i = 0; i < _countries.length; i++) {
+      // getting the current
+      Country current = _countries[i];
+
+      // if code is not null and matches
+      if (current.code != null && current.code == code) {
+        return current;
+      }
+    }
+
+    return null;
   }
 }

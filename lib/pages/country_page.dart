@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/country.dart';
 import '../widgets/widgets.dart';
 import './pages.dart';
 import '../utils/functions/functions.dart';
 import '../utils/constants/constants.dart';
+import '../providers/providers.dart';
 
 class CountryPage extends StatelessWidget {
   const CountryPage({super.key});
@@ -62,9 +64,33 @@ class CountryPage extends StatelessWidget {
                       items: ['${country.area} Sq. Km.'],
                     ),
                   if (country.borders != null && country.borders!.isNotEmpty)
-                    InfoSection(
-                      heading: 'Border(s)',
-                      items: country.borders!,
+                    Consumer<CountriesProvider>(
+                      builder: ((context, value, child) {
+                        return InfoSection(
+                          heading: 'Border(s)',
+                          items: country.borders!.map((code) {
+                            // getting the country by code
+                            final Country? country =
+                                value.getCountryByCode(code);
+
+                            return country != null ? country.commonName : code;
+                          }).toList(),
+                          clickHandlers: country.borders!.map((code) {
+                            // getting the country by the code
+                            final Country? country =
+                                value.getCountryByCode(code);
+
+                            return country == null
+                                ? () {}
+                                : () {
+                                    Navigator.of(context).pushNamed(
+                                      CountryPage.routeName,
+                                      arguments: country,
+                                    );
+                                  };
+                          }).toList(),
+                        );
+                      }),
                     ),
                   if (country.capitals != null && country.capitals!.isNotEmpty)
                     InfoSection(

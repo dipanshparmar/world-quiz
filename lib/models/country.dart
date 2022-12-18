@@ -5,6 +5,7 @@ class Country {
   final double? area;
   final List? borders;
   final String? commonName;
+  final String? code;
   final Map? currencies;
   final List? capitals;
   final String? coatOfArms;
@@ -33,6 +34,7 @@ class Country {
     required this.commonName,
     required this.officialName,
     required this.tlds,
+    required this.code,
     required this.independent,
     required this.unMember,
     required this.currencies,

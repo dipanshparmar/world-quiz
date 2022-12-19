@@ -31,6 +31,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CountriesProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => QuizProvider(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -45,6 +48,7 @@ class MyApp extends StatelessWidget {
           CountryPage.routeName: (context) => const CountryPage(),
           WebView.routeName: (context) => const WebView(),
           SearchPage.routeName: (context) => const SearchPage(),
+          QuizPage.routeName: (context) => const QuizPage(),
         },
       ),
     );

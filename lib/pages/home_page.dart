@@ -186,6 +186,21 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+      floatingActionButton: Consumer<CountriesProvider>(
+        builder: ((context, value, child) {
+          if (value.isDataLoaded()) {
+            return FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                Navigator.of(context).pushNamed(QuizPage.routeName);
+              },
+              child: const Icon(Icons.quiz),
+            );
+          }
+
+          return const SizedBox();
+        }),
+      ),
     );
   }
 

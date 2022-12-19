@@ -89,8 +89,7 @@ class QuizPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             onTap: () {
-              // pushing the question page
-              Navigator.of(context).pushNamed(QuestionPage.routeName);
+              // TODO: HANDLE THIS
             },
             child: Container(
               padding: const EdgeInsets.all(20),

@@ -1,7 +1,8 @@
-import 'package:countries/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../utils/enums/enums.dart';
+import '../providers/providers.dart';
+import '../pages/pages.dart';
 
 class QuizPage extends StatelessWidget {
   const QuizPage({super.key});
@@ -88,7 +89,8 @@ class QuizPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             onTap: () {
-              // TODO: IMPLEMENT THIS
+              // pushing the question page
+              Navigator.of(context).pushNamed(QuestionPage.routeName);
             },
             child: Container(
               padding: const EdgeInsets.all(20),

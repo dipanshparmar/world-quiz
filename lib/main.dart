@@ -1,3 +1,4 @@
+import 'package:countries/pages/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/pages.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
           WebView.routeName: (context) => const WebView(),
           SearchPage.routeName: (context) => const SearchPage(),
           QuizPage.routeName: (context) => const QuizPage(),
+          QuestionPage.routeName: (context) => const QuestionPage(),
+          ResultPage.routeName: (context) => const ResultPage(),
         },
       ),
     );

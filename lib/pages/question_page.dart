@@ -181,5 +181,3 @@ class _QuestionPageState extends State<QuestionPage> {
     );
   }
 }
-
-// TODO: HANDLE THE ANSWER CLICKS

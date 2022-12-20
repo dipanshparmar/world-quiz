@@ -40,10 +40,10 @@ class CountriesProvider with ChangeNotifier {
       final Map current = decoded[i];
 
       // fetching all the required information
-      final String? commonName = current['name']['common'];
-      final String? officialName = current['name']['official'];
+      final String commonName = current['name']['common'];
+      final String officialName = current['name']['official'];
       final List? tlds = current['tld'];
-      final String? countryCode = current['cca3'];
+      final String countryCode = current['cca3'];
       final bool? independent = current['independent'];
       final bool? unMember = current['unMember'];
       final Map? currencies = current['currencies'];
@@ -120,24 +120,8 @@ class CountriesProvider with ChangeNotifier {
     // filtering and returning the countries according to the type
     if (searchType == SearchType.country) {
       _searchResults = _countries.where((e) {
-        // if both the names are null
-        if (e.officialName == null && e.commonName == null) {
-          return false;
-        }
-
-        // if official name is null but the common name is not
-        if (e.officialName == null && e.commonName != null) {
-          return e.commonName!.toLowerCase().contains(query.toLowerCase());
-        }
-
-        // if official name is not null but the common name is null
-        if (e.officialName != null && e.commonName == null) {
-          return e.officialName!.toLowerCase().contains(query.toLowerCase());
-        }
-
-        // if both the names are not null
-        return e.officialName!.toLowerCase().contains(query.toLowerCase()) ||
-            e.commonName!.toLowerCase().contains(query.toLowerCase());
+        return e.officialName.toLowerCase().contains(query.toLowerCase()) ||
+            e.commonName.toLowerCase().contains(query.toLowerCase());
       }).toList();
     } else if (searchType == SearchType.currency) {
       _searchResults = _countries.where((e) {
@@ -339,18 +323,7 @@ class CountriesProvider with ChangeNotifier {
   }
 
   // method to get the name of the country by code
-  Country? getCountryByCode(String code) {
-    // going through all the countries
-    for (int i = 0; i < _countries.length; i++) {
-      // getting the current
-      Country current = _countries[i];
-
-      // if code is not null and matches
-      if (current.code != null && current.code == code) {
-        return current;
-      }
-    }
-
-    return null;
+  Country getCountryByCode(String code) {
+    return _countries.firstWhere((element) => element.code == code);
   }
 }

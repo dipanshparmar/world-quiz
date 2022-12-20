@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../utils/enums/enums.dart';
 import '../providers/providers.dart';
@@ -43,7 +44,7 @@ class QuizPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Image.asset('assets/images/quiz.png'),
+                      child: SvgPicture.asset('assets/images/quiz.svg'),
                     ),
                     const SizedBox(
                       height: 40,
@@ -177,16 +178,16 @@ class QuizPage extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: isActive ? Theme.of(context).primaryColor : null,
+                  color: isActive ? const Color(0xFF2F2E41) : null,
                   border: Border.all(
                     width: 2,
-                    color: Theme.of(context).primaryColor,
+                    color: const Color(0xFF2F2E41),
                   ),
                 ),
                 child: Text(
                   e.key,
                   style: TextStyle(
-                    color: isActive ? Colors.white : Colors.black,
+                    color: isActive ? const Color(0xFFF9D162) : Colors.black,
                   ),
                 ),
               ),

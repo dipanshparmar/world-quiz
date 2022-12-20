@@ -96,7 +96,7 @@ class QuizPage extends StatelessWidget {
                 ),
                 onTap: hasActiveQuizTypes
                     ? () {
-                        // TODO: HANDLE THIS
+                        Navigator.of(context).pushNamed(QuestionPage.routeName);
                       }
                     : () {},
                 child: Container(

@@ -21,7 +21,7 @@ class ResultPage extends StatelessWidget {
     } else if (inTenScale == 2) {
       return 'Climbing the stairs just like that.';
     } else if (inTenScale == 3) {
-      return 'Got 25% answers correct.';
+      return 'Got 30% of the answers correct.';
     } else if (inTenScale == 4) {
       return 'Nice! Almost reached the half.';
     } else if (inTenScale == 5) {

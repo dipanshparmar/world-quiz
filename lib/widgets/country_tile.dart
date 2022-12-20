@@ -13,7 +13,7 @@ class CountryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text('$_idx'),
-      title: Text(_country.commonName ?? 'Undefined'),
+      title: Text(_country.commonName),
       trailing: Text(_country.flag ?? ''),
       onTap: () {
         Navigator.pushNamed(

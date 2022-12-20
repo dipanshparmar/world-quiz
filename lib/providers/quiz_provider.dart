@@ -488,5 +488,3 @@ class QuizProvider with ChangeNotifier {
     return questionData;
   }
 }
-
-// TODO: BEFORE ADDING TO THE OPTIONS, CHECK IF ALREADY IN OR NOT

@@ -23,7 +23,7 @@ class CountryPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(country.commonName ?? 'Undefined'),
+        title: Text(country.commonName),
         centerTitle: true,
         elevation: 0,
       ),
@@ -47,8 +47,8 @@ class CountryPage extends StatelessWidget {
               height: 40,
             ),
             getCountryNames(
-              country.officialName ?? 'Undefined',
-              country.commonName ?? 'Undefined',
+              country.officialName,
+              country.commonName,
             ),
             const SizedBox(
               height: 20,
@@ -70,24 +70,22 @@ class CountryPage extends StatelessWidget {
                           heading: 'Border(s)',
                           items: country.borders!.map((code) {
                             // getting the country by code
-                            final Country? country =
+                            final Country country =
                                 value.getCountryByCode(code);
 
-                            return country != null ? country.commonName : code;
+                            return country.commonName;
                           }).toList(),
                           clickHandlers: country.borders!.map((code) {
                             // getting the country by the code
-                            final Country? country =
+                            final Country country =
                                 value.getCountryByCode(code);
 
-                            return country == null
-                                ? () {}
-                                : () {
-                                    Navigator.of(context).pushNamed(
-                                      CountryPage.routeName,
-                                      arguments: country,
-                                    );
-                                  };
+                            return () {
+                              Navigator.of(context).pushNamed(
+                                CountryPage.routeName,
+                                arguments: country,
+                              );
+                            };
                           }).toList(),
                         );
                       }),

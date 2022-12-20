@@ -484,8 +484,6 @@ class QuizProvider with ChangeNotifier {
       (questionData['choices'] as List).shuffle();
     }
 
-    print(questionData);
-
     // returning the question data
     return questionData;
   }

@@ -84,29 +84,41 @@ class QuizPage extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: InkWell(
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            onTap: () {
-              // TODO: HANDLE THIS
-            },
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Center(
-                child: Text(
-                  'Let\'s Do This',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+          child: Consumer<QuizProvider>(
+            builder: ((context, value, child) {
+              // getting the active quiz types boolean
+              final bool hasActiveQuizTypes =
+                  value.getActiveQuizTypes().isEmpty ? false : true;
+
+              return InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                onTap: hasActiveQuizTypes
+                    ? () {
+                        // TODO: HANDLE THIS
+                      }
+                    : () {},
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: hasActiveQuizTypes
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Let\'s Do This',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
           ),
         ),
         const SizedBox(

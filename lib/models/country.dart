@@ -4,8 +4,8 @@ class Country {
   // properties of the country
   final double? area;
   final List? borders;
-  final String? commonName;
-  final String? code;
+  final String commonName;
+  final String code;
   final Map? currencies;
   final List? capitals;
   final String? coatOfArms;
@@ -22,7 +22,7 @@ class Country {
   final LatLng? latLng;
   final bool? landLocked;
   final String? mapsUrl;
-  final String? officialName;
+  final String officialName;
   final int? population;
   final String? region;
   final String? subregion;

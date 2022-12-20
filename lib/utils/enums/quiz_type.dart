@@ -3,7 +3,6 @@ enum QuizType {
   subRegion,
   continent,
   idd,
-  currency,
   language,
   landlocked,
   border,

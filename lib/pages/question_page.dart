@@ -243,8 +243,7 @@ class _QuestionPageState extends State<QuestionPage> {
                               },
                               child: Container(
                                 width: double.infinity,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
+                                padding: const EdgeInsets.all(15),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   border: Border.all(

@@ -58,7 +58,7 @@ class _QuestionPageState extends State<QuestionPage> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(false);
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -87,8 +87,7 @@ class _QuestionPageState extends State<QuestionPage> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(true);
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

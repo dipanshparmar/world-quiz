@@ -130,7 +130,8 @@ class QuizPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(50),
           ),
           onTap: () {
-            // TODO: IMPLEMENT THIS
+            // pushing the history page
+            Navigator.of(context).pushNamed(HistoryPage.routeName);
           },
           child: Container(
             decoration: BoxDecoration(

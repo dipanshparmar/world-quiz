@@ -5,3 +5,4 @@ export './search_page.dart';
 export './quiz_page.dart';
 export './question_page.dart';
 export './result_page.dart';
+export './history_page.dart';

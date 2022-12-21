@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
           QuizPage.routeName: (context) => const QuizPage(),
           QuestionPage.routeName: (context) => const QuestionPage(),
           ResultPage.routeName: (context) => const ResultPage(),
+          HistoryPage.routeName: (context) => const HistoryPage(),
         },
       ),
     );

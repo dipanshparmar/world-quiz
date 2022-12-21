@@ -46,6 +46,13 @@ class QuizProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // method to get the string representation of the quiz type
+  String getStringRepresentationOfQuizType(QuizType type) {
+    return _quizTypes.entries
+        .firstWhere((element) => element.value == type)
+        .key;
+  }
+
   // method to remove the quiz type from the list
   void removeQuizType(QuizType type) {
     _activeQuizTypes.remove(type);

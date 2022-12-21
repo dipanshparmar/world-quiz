@@ -29,7 +29,7 @@ class ResultPage extends StatelessWidget {
     } else if (inTenScale == 6) {
       return 'Wonderful.';
     } else if (inTenScale == 7) {
-      return 'Impressive';
+      return 'Impressive.';
     } else if (inTenScale == 8) {
       return 'You deserve a treat today.';
     } else if (inTenScale == 9) {

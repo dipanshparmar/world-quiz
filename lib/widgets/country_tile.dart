@@ -135,11 +135,15 @@ class CountryTile extends StatelessWidget {
         getActiveContinents(continentsFilter, currentCountryFilters);
 
     return Row(
-      children: activeContinents.map((e) {
-        return _buildCustomChip(
-          e,
-          textColor: Colors.black,
-          color: Theme.of(context).colorScheme.secondary,
+      children: activeContinents.asMap().entries.map((e) {
+        return Padding(
+          padding: EdgeInsets.only(
+              right: e.key == activeContinents.length - 1 ? 0 : 10.0),
+          child: _buildCustomChip(
+            e.value,
+            textColor: Colors.black,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
         );
       }).toList(),
     );

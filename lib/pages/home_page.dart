@@ -116,9 +116,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const Text(
                   'Getting your data. Please hang on!',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ],
             );

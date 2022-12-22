@@ -54,8 +54,8 @@ class _OptionsState extends State<Options> {
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
+                    vertical: 8,
+                    horizontal: 12,
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
@@ -63,14 +63,13 @@ class _OptionsState extends State<Options> {
                         : null,
                     border: Border.all(
                       color: Theme.of(context).colorScheme.secondary,
-                      width: 2,
+                      width: 1,
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
                     widget.items[e],
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
                       color: isSelected ? Colors.black : Colors.white,
                     ),
                   ),

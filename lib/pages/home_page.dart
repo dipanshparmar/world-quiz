@@ -254,39 +254,31 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
+              Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Heading(
-                      'Filter results',
-                      paddingLeft: 0,
-                    ),
-                    Consumer<CountriesProvider>(
-                      builder: ((context, value, child) {
-                        // has countries
-                        bool hasFilters = value.hasActiveFilters();
+                alignment: Alignment.centerRight,
+                child: Consumer<CountriesProvider>(
+                  builder: ((context, value, child) {
+                    // has countries
+                    bool hasFilters = value.hasActiveFilters();
 
-                        return GestureDetector(
-                          onTap: hasFilters
-                              ? () {
-                                  value.clearFilters();
-                                }
-                              : () {},
-                          child: Text(
-                            'Clear All',
-                            style: TextStyle(
-                              color: hasFilters
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Colors.white.withOpacity(.5),
-                              fontWeight: hasFilters ? FontWeight.bold : null,
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ],
+                    return GestureDetector(
+                      onTap: hasFilters
+                          ? () {
+                              value.clearFilters();
+                            }
+                          : () {},
+                      child: Text(
+                        'Clear All',
+                        style: TextStyle(
+                          color: hasFilters
+                              ? Theme.of(context).colorScheme.secondary
+                              : Colors.white.withOpacity(.5),
+                          fontWeight: hasFilters ? FontWeight.bold : null,
+                        ),
+                      ),
+                    );
+                  }),
                 ),
               ),
               const SizedBox(

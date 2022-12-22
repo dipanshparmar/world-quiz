@@ -36,9 +36,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Countries'),
-        elevation: Provider.of<CountriesProvider>(context).hasActiveFilters()
-            ? 0
-            : null,
         actions: [
           Consumer<CountriesProvider>(
             builder: ((context, value, child) {
@@ -99,81 +96,66 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: _future,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  'Getting your data. Please hang on!',
-                ),
-              ],
-            );
-          }
-
-          // if we have an error
-          if (snapshot.hasError) {
-            return _buildErrorContainer(snapshot, context);
-          } else {
-            // if we have the data then access it and list it
-            return Consumer<CountriesProvider>(
-                builder: (context, value, child) {
-              // getting the countries
-              final List<Country> countries = !value.hasActiveFilters()
-                  ? value.getCountries()
-                  : value.getFilteredCountries();
-
-              // if countries is empty then just return the text
-              if (countries.isEmpty) {
-                return const Center(
-                  child: Text('No countries found!'),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          FutureBuilder(
+            future: _future,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      'Getting your data. Please hang on!',
+                    ),
+                  ],
                 );
               }
 
-              // returning the listview
-              return Column(
-                children: [
-                  // show only if the filters are active
-                  if (value.hasActiveFilters())
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(10.0),
-                      color: Theme.of(context).primaryColor,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Total results found: ${value.getFilteredCountries().length}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  Expanded(
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        // getting the current country
-                        final Country country = countries[index];
+              // if we have an error
+              if (snapshot.hasError) {
+                return _buildErrorContainer(snapshot, context);
+              } else {
+                // if we have the data then access it and list it
+                return Consumer<CountriesProvider>(
+                    builder: (context, value, child) {
+                  // getting the countries
+                  final List<Country> countries = !value.hasActiveFilters()
+                      ? value.getCountries()
+                      : value.getFilteredCountries();
 
-                        return CountryTile(context, index + 1, country);
-                      },
-                      itemCount: countries.length,
-                    ),
-                  ),
-                ],
-              );
-            });
-          }
-        },
+                  // if countries is empty then just return the text
+                  if (countries.isEmpty) {
+                    return const Center(
+                      child: Text('No countries found!'),
+                    );
+                  }
+
+                  // returning the listview
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      // getting the current country
+                      final Country country = countries[index];
+
+                      return CountryTile(context, index + 1, country);
+                    },
+                    itemCount: countries.length,
+                  );
+                });
+              }
+            },
+          ),
+        ],
       ),
       floatingActionButton: _getFloatingActionButton(),
     );
@@ -256,94 +238,92 @@ class _HomePageState extends State<HomePage> {
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * .8,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Column(children: [
-              Container(
-                height: 2,
-                width: 30,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
+        return Stack(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .8,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(children: [
+                  Container(
+                    height: 2,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Consumer<CountriesProvider>(
+                        builder: ((context, value, child) {
+                          return SingleChildScrollView(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            physics: const BouncingScrollPhysics(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Heading('Continents'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Options(
+                                  items: value.getContinents(),
+                                  filterType: FilterType.continent,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                const Heading('Sub regions'),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Options(
+                                  items: value.getSubregions(),
+                                  filterType: FilterType.subRegion,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  )
+                ]),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                alignment: Alignment.centerRight,
-                child: Consumer<CountriesProvider>(
-                  builder: ((context, value, child) {
-                    // has countries
-                    bool hasFilters = value.hasActiveFilters();
-
-                    return GestureDetector(
-                      onTap: hasFilters
+            ),
+            Consumer<CountriesProvider>(
+              builder: ((context, value, child) {
+                if (value.hasActiveFilters()) {
+                  return Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child: FloatingActionButton(
+                      tooltip: 'Clear all filters',
+                      onPressed: value.hasActiveFilters()
                           ? () {
                               value.clearFilters();
                             }
-                          : () {},
-                      child: Text(
-                        'Clear All',
-                        style: TextStyle(
-                          color: hasFilters
-                              ? Theme.of(context).colorScheme.secondary
-                              : Colors.white.withOpacity(.5),
-                          fontWeight: hasFilters ? FontWeight.bold : null,
-                        ),
+                          : null,
+                      child: const Icon(
+                        Icons.clear,
+                        color: Colors.black,
                       ),
-                    );
-                  }),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Consumer<CountriesProvider>(
-                    builder: ((context, value, child) {
-                      return SingleChildScrollView(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Heading('Continents'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Options(
-                              items: value.getContinents(),
-                              filterType: FilterType.continent,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Heading('Sub regions'),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Options(
-                              items: value.getSubregions(),
-                              filterType: FilterType.subRegion,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-              )
-            ]),
-          ),
+                    ),
+                  );
+                }
+
+                return const SizedBox();
+              }),
+            )
+          ],
         );
       },
     );

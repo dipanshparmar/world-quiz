@@ -86,36 +86,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       bottom: 20,
                     ),
                     expandedAlignment: Alignment.centerLeft,
-                    children: [
-                      SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0, right: 20),
-                          child: Row(
-                            children: topics.map((topic) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF3F3D56),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                margin: const EdgeInsets.only(left: 10),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 5,
-                                ),
-                                child: Text(
-                                  topic,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      )
-                    ],
+                    children: [_getTopics(topics)],
                   ),
                   if (index == data.length - 1)
                     Padding(
@@ -133,6 +104,37 @@ class _HistoryPageState extends State<HistoryPage> {
             }),
           );
         },
+      ),
+    );
+  }
+
+  SingleChildScrollView _getTopics(List<String> topics) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0, right: 20),
+        child: Row(
+          children: topics.map((topic) {
+            return Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF3F3D56),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              margin: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 5,
+              ),
+              child: Text(
+                topic,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

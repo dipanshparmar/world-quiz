@@ -73,6 +73,7 @@ class CountryTile extends StatelessWidget {
                   currentCountryContinents,
                 ),
 
+              // if there are continents in the current country and also have active continents. As well as also have the sub region only then show the space
               if ((currentCountryContinents != null &&
                       currentCountryContinents.isNotEmpty &&
                       getActiveContinents(

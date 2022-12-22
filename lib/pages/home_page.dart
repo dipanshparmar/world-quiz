@@ -123,50 +123,7 @@ class _HomePageState extends State<HomePage> {
 
           // if we have an error
           if (snapshot.hasError) {
-            return Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    snapshot.error is SocketException
-                        ? kSocketErrorText
-                        : 'An error occurred while fetching the data!',
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(HomePage.routeName);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 20,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Text(
-                        'Retry',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            );
+            return _buildErrorContainer(snapshot, context);
           } else {
             // if we have the data then access it and list it
             return Consumer<CountriesProvider>(
@@ -218,20 +175,71 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      floatingActionButton: Consumer<CountriesProvider>(
-        builder: ((context, value, child) {
-          if (value.isDataLoaded()) {
-            return FloatingActionButton(
-              backgroundColor: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).pushNamed(QuizPage.routeName);
-              },
-              child: const Icon(Icons.quiz),
-            );
-          }
+      floatingActionButton: _getFloatingActionButton(),
+    );
+  }
 
-          return const SizedBox();
-        }),
+  Consumer<CountriesProvider> _getFloatingActionButton() {
+    return Consumer<CountriesProvider>(
+      builder: ((context, value, child) {
+        if (value.isDataLoaded()) {
+          return FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
+            onPressed: () {
+              Navigator.of(context).pushNamed(QuizPage.routeName);
+            },
+            child: const Icon(Icons.quiz),
+          );
+        }
+
+        return const SizedBox();
+      }),
+    );
+  }
+
+  Container _buildErrorContainer(
+      AsyncSnapshot<dynamic> snapshot, BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            snapshot.error is SocketException
+                ? kSocketErrorText
+                : 'An error occurred while fetching the data!',
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(HomePage.routeName);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: const Text(
+                'Retry',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

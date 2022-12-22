@@ -159,10 +159,9 @@ class _HomePageState extends State<HomePage> {
             return Consumer<CountriesProvider>(
                 builder: (context, value, child) {
               // getting the countries
-              final List<Country> countries =
-                  value.getFilteredCountries().isEmpty
-                      ? value.getCountries()
-                      : value.getFilteredCountries();
+              final List<Country> countries = !value.hasActiveFilters()
+                  ? value.getCountries()
+                  : value.getFilteredCountries();
 
               // if countries is empty then just return the text
               if (countries.isEmpty) {
@@ -178,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                   // getting the current country
                   final Country country = countries[index];
 
-                  return CountryTile(index + 1, country);
+                  return CountryTile(context, index + 1, country);
                 },
                 itemCount: countries.length,
               );

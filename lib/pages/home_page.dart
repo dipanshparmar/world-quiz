@@ -36,6 +36,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Countries'),
+        elevation: Provider.of<CountriesProvider>(context).hasActiveFilters()
+            ? 0
+            : null,
         actions: [
           Consumer<CountriesProvider>(
             builder: ((context, value, child) {
@@ -177,7 +180,25 @@ class _HomePageState extends State<HomePage> {
                   // getting the current country
                   final Country country = countries[index];
 
-                  return CountryTile(context, index + 1, country);
+                  return Column(
+                    children: [
+                      if (index == 0 && value.hasActiveFilters())
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(10.0),
+                          color: Theme.of(context).primaryColor,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Total results found: ${value.getFilteredCountries().length}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      CountryTile(context, index + 1, country),
+                    ],
+                  );
                 },
                 itemCount: countries.length,
               );

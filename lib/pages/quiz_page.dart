@@ -42,30 +42,13 @@ class QuizPage extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: SvgPicture.asset('assets/images/quiz.svg'),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Text(
-                        'Please select the topics to include:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: _buildQuizTypes(context),
+                    ),
+                    const SizedBox(
+                      height: 40,
                     ),
                   ],
                 ),
@@ -161,6 +144,7 @@ class QuizPage extends StatelessWidget {
         return Wrap(
           spacing: 5,
           runSpacing: 5,
+          alignment: WrapAlignment.center,
           children: quizTypes.entries.map((e) {
             // deciding that whether the current type is active or not
             final bool isActive = activeQuizTypes.contains(e.value);
@@ -179,10 +163,10 @@ class QuizPage extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: isActive ? const Color(0xFF3F3D56) : null,
+                  color: isActive ? Theme.of(context).primaryColor : null,
                   border: Border.all(
                     width: 1,
-                    color: const Color(0xFF3F3D56),
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 child: Text(

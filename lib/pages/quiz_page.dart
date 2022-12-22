@@ -179,10 +179,10 @@ class QuizPage extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: isActive ? Theme.of(context).primaryColor : null,
+                  color: isActive ? const Color(0xFF3F3D56) : null,
                   border: Border.all(
-                    width: 2,
-                    color: Theme.of(context).primaryColor,
+                    width: 1,
+                    color: const Color(0xFF3F3D56),
                   ),
                 ),
                 child: Text(

@@ -47,9 +47,6 @@ class QuizPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: _buildQuizTypes(context),
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
                   ],
                 ),
               ),

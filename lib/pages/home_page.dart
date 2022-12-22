@@ -174,33 +174,33 @@ class _HomePageState extends State<HomePage> {
               }
 
               // returning the listview
-              return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  // getting the current country
-                  final Country country = countries[index];
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    color: Theme.of(context).primaryColor,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Total results found: ${value.getFilteredCountries().length}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        // getting the current country
+                        final Country country = countries[index];
 
-                  return Column(
-                    children: [
-                      if (index == 0 && value.hasActiveFilters())
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(10.0),
-                          color: Theme.of(context).primaryColor,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Total results found: ${value.getFilteredCountries().length}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      CountryTile(context, index + 1, country),
-                    ],
-                  );
-                },
-                itemCount: countries.length,
+                        return CountryTile(context, index + 1, country);
+                      },
+                      itemCount: countries.length,
+                    ),
+                  ),
+                ],
               );
             });
           }

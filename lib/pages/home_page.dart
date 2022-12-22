@@ -176,18 +176,20 @@ class _HomePageState extends State<HomePage> {
               // returning the listview
               return Column(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(10.0),
-                    color: Theme.of(context).primaryColor,
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Total results found: ${value.getFilteredCountries().length}',
-                      style: const TextStyle(
-                        color: Colors.white,
+                  // show only if the filters are active
+                  if (value.hasActiveFilters())
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      color: Theme.of(context).primaryColor,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Total results found: ${value.getFilteredCountries().length}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
                   Expanded(
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),

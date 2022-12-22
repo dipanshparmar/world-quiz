@@ -141,16 +141,29 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  GestureDetector(
+                  InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     onTap: () {
                       Navigator.of(context)
                           .pushReplacementNamed(HomePage.routeName);
                     },
-                    child: Text(
-                      'Retry',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 20,
+                      ),
+                      decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Text(
+                        'Retry',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )

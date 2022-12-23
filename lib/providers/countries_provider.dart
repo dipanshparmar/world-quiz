@@ -326,4 +326,74 @@ class CountriesProvider with ChangeNotifier {
   Country getCountryByCode(String code) {
     return _countries.firstWhere((element) => element.code == code);
   }
+
+  // method to get the matching names
+  List getMatchingCountryNames(Country country, String query) {
+    // if the common name and the official name both contain it then return both
+    if (country.commonName.toLowerCase().contains(query.toLowerCase()) &&
+        country.officialName.toLowerCase().contains(query.toLowerCase())) {
+      return [country.officialName, country.commonName];
+    }
+
+    // if only the common name contains it
+    if (country.commonName.toLowerCase().contains(query.toLowerCase())) {
+      return [country.commonName];
+    }
+
+    // if only the official name contains it
+    if (country.officialName.toLowerCase().contains(query.toLowerCase())) {
+      return [country.officialName];
+    }
+
+    // if none of the name contains it, return
+    return [];
+  }
+
+  // method to get the matching currencies
+  List<String> getMatchingCurrencies(Country country, String query) {
+    // if the currencies are empty then return
+    if (country.currencies == null) {
+      return [];
+    }
+
+    // constructing the list of the currencies
+    final List<String> currencies = country.currencies!.entries.map((entry) {
+      return entry.value['name'] as String;
+    }).toList();
+
+    // returning the matching currencies
+    return currencies.where((currency) {
+      return currency.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+  }
+
+  // method to get the matching capitals
+  List<dynamic> getMatchingCapitals(Country country, String query) {
+    // if the capitals are null then return
+    if (country.capitals == null) {
+      return [];
+    }
+
+    // returning the matching capitals
+    return country.capitals!.where((capital) {
+      return (capital as String).toLowerCase().contains(query.toLowerCase());
+    }).toList();
+  }
+
+  // method to get the matching languages
+  List<dynamic> getMatchingLanguages(Country country, String query) {
+    // if the languages are null then return an empty list
+    if (country.languages == null) {
+      return [];
+    }
+
+    // constructing the languages
+    final List languages =
+        country.languages!.values.map((value) => value).toList();
+
+    // returning the matching languages
+    return languages.where((language) {
+      return (language as String).toLowerCase().contains(query.toLowerCase());
+    }).toList();
+  }
 }

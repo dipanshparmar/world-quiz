@@ -21,6 +21,7 @@ class _WebViewState extends State<WebView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Maps'),
+        centerTitle: true,
       ),
       body: Stack(
         children: [

@@ -11,12 +11,14 @@ class CountryTile extends StatelessWidget {
     this._idx,
     this._country, {
     super.key,
+    this.fromSearch = false,
   });
 
   // var to hold the country
   final BuildContext context;
   final int _idx;
   final Country _country;
+  final bool fromSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,11 @@ class CountryTile extends StatelessWidget {
 
   // method to build the subtitle
   Widget? _buildSubtitle() {
+    // if from search then return null
+    if (fromSearch) {
+      return null;
+    }
+
     // getting the countries provider
     final CountriesProvider countriesProvider =
         Provider.of<CountriesProvider>(context, listen: false);

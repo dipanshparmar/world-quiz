@@ -156,7 +156,12 @@ class _SearchPageState extends State<SearchPage> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: searchResults.length,
                         itemBuilder: ((context, index) {
-                          return CountryTile(context, index + 1, searchResults[index]);
+                          return CountryTile(
+                            context,
+                            index + 1,
+                            searchResults[index],
+                            fromSearch: true,
+                          );
                         }),
                       );
                     }),

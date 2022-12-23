@@ -95,46 +95,6 @@ class CountryPage extends StatelessWidget {
                       heading: 'Capital(s)',
                       items: country.capitals!,
                     ),
-                  if (country.car != null &&
-                      country.car!.isNotEmpty &&
-                      country.car!.containsKey('side'))
-                    InfoSection(
-                      heading: 'Car side',
-                      items: [country.car!['side']],
-                    ),
-                  if (country.car != null &&
-                      country.car!.isNotEmpty &&
-                      country.car!.containsKey('signs') &&
-                      // making sure there are no empty string to render
-                      (country.car!['signs'] as List)
-                          .where((e) => e.isNotEmpty)
-                          .toList()
-                          .isNotEmpty)
-                    InfoSection(
-                      heading: 'Car signs',
-                      items: (country.car!['signs'] as List).map((e) {
-                        return e;
-                      }).toList(),
-                    ),
-                  if (country.coatOfArms != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Heading('Coat of Arms'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
-                          height: 150,
-                          width: double.infinity,
-                          child: getNetworkImage(country.coatOfArms!),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        )
-                      ],
-                    ),
                   if (country.continents != null &&
                       country.continents!.isNotEmpty)
                     InfoSection(
@@ -159,6 +119,67 @@ class CountryPage extends StatelessWidget {
 
                         // removing the leading or trailing spaces and returning the final string
                         return cString.trim();
+                      }).toList(),
+                    ),
+                  if (country.languages != null &&
+                      country.languages!.isNotEmpty)
+                    InfoSection(
+                      heading: 'Language(s)',
+                      items: country.languages!.values.toList(),
+                    ),
+                  if (country.population != null)
+                    InfoSection(
+                      heading: 'Population',
+                      items: [country.population],
+                    ),
+                  if (country.coatOfArms != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Heading('Coat of Arms'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          height: 150,
+                          width: double.infinity,
+                          child: getNetworkImage(country.coatOfArms!),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    ),
+                  if (country.region != null)
+                    InfoSection(
+                      heading: 'Region',
+                      items: [country.region],
+                    ),
+                  if (country.subregion != null)
+                    InfoSection(
+                      heading: 'Sub region',
+                      items: [country.subregion],
+                    ),
+                  if (country.car != null &&
+                      country.car!.isNotEmpty &&
+                      country.car!.containsKey('side'))
+                    InfoSection(
+                      heading: 'Car side',
+                      items: [country.car!['side']],
+                    ),
+                  if (country.car != null &&
+                      country.car!.isNotEmpty &&
+                      country.car!.containsKey('signs') &&
+                      // making sure there are no empty string to render
+                      (country.car!['signs'] as List)
+                          .where((e) => e.isNotEmpty)
+                          .toList()
+                          .isNotEmpty)
+                    InfoSection(
+                      heading: 'Car signs',
+                      items: (country.car!['signs'] as List).map((e) {
+                        return e;
                       }).toList(),
                     ),
                   if (country.demonyms != null &&
@@ -208,31 +229,10 @@ class CountryPage extends StatelessWidget {
                       heading: 'Land locked',
                       items: [country.landLocked == true ? 'Yes' : 'No'],
                     ),
-                  if (country.languages != null &&
-                      country.languages!.isNotEmpty)
-                    InfoSection(
-                      heading: 'Language(s)',
-                      items: country.languages!.values.toList(),
-                    ),
                   if (country.latLng != null)
                     InfoSection(
                       heading: 'Lat Lng',
                       items: ['${country.latLng!.lat}, ${country.latLng!.lng}'],
-                    ),
-                  if (country.population != null)
-                    InfoSection(
-                      heading: 'Population',
-                      items: [country.population],
-                    ),
-                  if (country.region != null)
-                    InfoSection(
-                      heading: 'Region',
-                      items: [country.region],
-                    ),
-                  if (country.subregion != null)
-                    InfoSection(
-                      heading: 'Sub region',
-                      items: [country.subregion],
                     ),
                   if (country.timezones != null &&
                       country.timezones!.isNotEmpty)

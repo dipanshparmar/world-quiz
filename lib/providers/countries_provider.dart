@@ -103,6 +103,11 @@ class CountriesProvider with ChangeNotifier {
       _countries.add(country);
     }
 
+    // sorting the countries
+    _countries.sort(
+      (a, b) => a.commonName.compareTo(b.commonName),
+    );
+
     // notifying the listeners
     notifyListeners();
   }

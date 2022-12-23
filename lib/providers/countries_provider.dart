@@ -21,6 +21,12 @@ class CountriesProvider with ChangeNotifier {
     FilterType.subRegion: [],
   };
 
+  // list to hold the continents
+  final List<String> _continents = [];
+
+  // list to store the regions
+  final List<String> _subregions = [];
+
   // method to load the countries
   Future<void> loadCountries() async {
     // making a http request
@@ -101,12 +107,47 @@ class CountriesProvider with ChangeNotifier {
 
       // adding the country to the list
       _countries.add(country);
+
+      // ADDING THE CONTINENTS TO THE LIST
+      // getting the continents of current country
+      final List? conts = _countries[i].continents;
+
+      // if conts is not null and not empty then iterate over them
+      if (conts != null && conts.isNotEmpty) {
+        for (int i = 0; i < conts.length; i++) {
+          // if current continent is not already in the list of continents then add it
+          if (!_continents.contains(conts[i])) {
+            _continents.add(conts[i]);
+          }
+        }
+      }
+
+      // ADDING THE SUB REGIONS TO THE LIST
+      // running a for loop for the length of the countries times
+      // getting the current countries' regions
+      final String? subreg = _countries[i].subregion;
+
+      // if region is not null and not an empty string
+      if (subreg != null && subreg.isNotEmpty) {
+        // adding the subregion to the list if not already present
+        if (!_subregions.contains(subreg)) {
+          _subregions.add(subreg);
+        }
+      }
     }
 
     // sorting the countries
     _countries.sort(
       (a, b) => a.commonName.compareTo(b.commonName),
     );
+
+    // sorting the continents
+    _continents.sort(
+      (a, b) => a.compareTo(b),
+    );
+
+    // sorting the sub regions
+    _subregions.sort(((a, b) => a.compareTo(b)));
 
     // notifying the listeners
     notifyListeners();
@@ -175,48 +216,12 @@ class CountriesProvider with ChangeNotifier {
 
   // method to get the continents
   List<String> getContinents() {
-    // list to hold the continents
-    List<String> continents = [];
-
-    // going through all the countries
-    for (int i = 0; i < _countries.length; i++) {
-      // getting the continents of current country
-      final List? conts = _countries[i].continents;
-
-      // if conts is not null and not empty then iterate over them
-      if (conts != null && conts.isNotEmpty) {
-        for (int i = 0; i < conts.length; i++) {
-          // if current continent is not already in the list of continents then add it
-          if (!continents.contains(conts[i])) {
-            continents.add(conts[i]);
-          }
-        }
-      }
-    }
-
-    return continents;
+    return _continents;
   }
 
   // method to get the regions
   List<String> getSubregions() {
-    // list to store the regions
-    List<String> subregions = [];
-
-    // running a for loop for the length of the countries times
-    for (int i = 0; i < _countries.length; i++) {
-      // getting the current countries' regions
-      final String? subregion = _countries[i].subregion;
-
-      // if region is not null and not an empty string
-      if (subregion != null && subregion.isNotEmpty) {
-        // adding the subregion to the list if not already present
-        if (!subregions.contains(subregion)) {
-          subregions.add(subregion);
-        }
-      }
-    }
-
-    return subregions;
+    return _subregions;
   }
 
   // function to apply a filter

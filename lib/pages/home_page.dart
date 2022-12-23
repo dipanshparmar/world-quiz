@@ -68,7 +68,8 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       onPressed: isDataLoaded
                           ? () {
-                              getModalBottomSheet(context);
+                              Navigator.of(context)
+                                  .pushNamed(FiltersPage.routeName);
                             }
                           : null,
                       icon: Icon(
@@ -218,142 +219,6 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-    );
-  }
-
-  Future<dynamic> getModalBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-      backgroundColor: Theme.of(context).primaryColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * .8,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Column(children: [
-                    Container(
-                      height: 2,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Consumer<CountriesProvider>(
-                          builder: ((context, value, child) {
-                            return SingleChildScrollView(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              physics: const BouncingScrollPhysics(),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Heading('Continents'),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Options(
-                                    items: value.getContinents(),
-                                    filterType: FilterType.continent,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  const Heading('Sub regions'),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Options(
-                                    items: value.getSubregions(),
-                                    filterType: FilterType.subRegion,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
-                        ),
-                      ),
-                    )
-                  ]),
-                ),
-                Consumer<CountriesProvider>(
-                  builder: ((context, value, child) {
-                    // if there are active filters
-                    if (value.hasActiveFilters()) {
-                      // returning the container
-                      return Container(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Total results: ${value.getFilteredCountries().length}',
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              customBorder: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              onTap: () {
-                                value.clearFilters();
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                                child: const Icon(
-                                  Icons.clear,
-                                  color: Colors.black,
-                                  size: 18,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-
-                    return const SizedBox();
-                  }),
-                )
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 

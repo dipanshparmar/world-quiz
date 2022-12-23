@@ -21,7 +21,12 @@ class CountryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text('$_idx'),
+      leading: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('$_idx'),
+        ],
+      ),
       title: Text(_country.commonName),
       trailing: Text(_country.flag ?? ''),
       subtitle: _buildSubtitle(),

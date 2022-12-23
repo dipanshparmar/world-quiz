@@ -5,10 +5,12 @@ class Heading extends StatelessWidget {
     this._text, {
     Key? key,
     this.paddingLeft,
+    this.color = Colors.white,
   }) : super(key: key);
 
   final String _text;
   final double? paddingLeft;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +18,9 @@ class Heading extends StatelessWidget {
       padding: EdgeInsets.only(left: paddingLeft ?? 20),
       child: Text(
         _text,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: color,
         ),
       ),
     );

@@ -96,66 +96,61 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          FutureBuilder(
-            future: _future,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Getting your data. Please hang on!',
-                    ),
-                  ],
+      body: FutureBuilder(
+        future: _future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Getting your data. Please hang on!',
+                ),
+              ],
+            );
+          }
+
+          // if we have an error
+          if (snapshot.hasError) {
+            return _buildErrorContainer(snapshot, context);
+          } else {
+            // if we have the data then access it and list it
+            return Consumer<CountriesProvider>(
+                builder: (context, value, child) {
+              // getting the countries
+              final List<Country> countries = !value.hasActiveFilters()
+                  ? value.getCountries()
+                  : value.getFilteredCountries();
+
+              // if countries is empty then just return the text
+              if (countries.isEmpty) {
+                return const Center(
+                  child: Text('No countries found!'),
                 );
               }
 
-              // if we have an error
-              if (snapshot.hasError) {
-                return _buildErrorContainer(snapshot, context);
-              } else {
-                // if we have the data then access it and list it
-                return Consumer<CountriesProvider>(
-                    builder: (context, value, child) {
-                  // getting the countries
-                  final List<Country> countries = !value.hasActiveFilters()
-                      ? value.getCountries()
-                      : value.getFilteredCountries();
+              // returning the listview
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  // getting the current country
+                  final Country country = countries[index];
 
-                  // if countries is empty then just return the text
-                  if (countries.isEmpty) {
-                    return const Center(
-                      child: Text('No countries found!'),
-                    );
-                  }
-
-                  // returning the listview
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      // getting the current country
-                      final Country country = countries[index];
-
-                      return CountryTile(context, index + 1, country);
-                    },
-                    itemCount: countries.length,
-                  );
-                });
-              }
-            },
-          ),
-        ],
+                  return CountryTile(context, index + 1, country);
+                },
+                itemCount: countries.length,
+              );
+            });
+          }
+        },
       ),
       floatingActionButton: _getFloatingActionButton(),
     );

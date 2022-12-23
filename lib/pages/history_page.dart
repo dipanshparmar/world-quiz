@@ -79,9 +79,9 @@ class _HistoryPageState extends State<HistoryPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    iconColor: const Color(0xFF3F3D56),
+                    iconColor: Colors.black,
                     subtitle: Text(date),
-                    textColor: const Color(0xFF3F3D56),
+                    textColor: Colors.black,
                     childrenPadding: const EdgeInsets.only(
                       bottom: 20,
                     ),
@@ -96,6 +96,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black.withOpacity(.6),
+                          fontSize: 13,
                         ),
                       ),
                     ),
@@ -118,7 +119,7 @@ class _HistoryPageState extends State<HistoryPage> {
           children: topics.map((topic) {
             return Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF3F3D56),
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(5),
               ),
               margin: const EdgeInsets.only(left: 10),

@@ -6,7 +6,6 @@ import '../providers/providers.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
 import './pages.dart';
-import '../utils/enums/enums.dart';
 import '../utils/constants/constants.dart';
 
 class HomePage extends StatefulWidget {

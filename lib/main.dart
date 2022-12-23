@@ -57,6 +57,7 @@ class MyApp extends StatelessWidget {
           QuestionPage.routeName: (context) => const QuestionPage(),
           ResultPage.routeName: (context) => const ResultPage(),
           HistoryPage.routeName: (context) => const HistoryPage(),
+          FiltersPage.routeName: (context) => const FiltersPage(),
         },
       ),
     );

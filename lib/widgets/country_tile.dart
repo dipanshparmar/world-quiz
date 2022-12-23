@@ -12,6 +12,7 @@ class CountryTile extends StatelessWidget {
     this._country, {
     super.key,
     this.fromSearch = false,
+    this.items = const [],
   });
 
   // var to hold the country
@@ -19,6 +20,7 @@ class CountryTile extends StatelessWidget {
   final int _idx;
   final Country _country;
   final bool fromSearch;
+  final List items;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,27 @@ class CountryTile extends StatelessWidget {
   Widget? _buildSubtitle() {
     // if from search then return null
     if (fromSearch) {
-      return null;
+      // if items are empty then return null
+      if (items.isEmpty) {
+        return null;
+      }
+
+      // otherwise for every list item
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        child: Row(
+          children: items.asMap().entries.map((entry) {
+            return Padding(
+              padding: EdgeInsets.only(left: entry.key == 0 ? 0 : 10),
+              child: _buildCustomChip(
+                entry.value,
+                color: Theme.of(context).primaryColor,
+              ),
+            );
+          }).toList(),
+        ),
+      );
     }
 
     // getting the countries provider

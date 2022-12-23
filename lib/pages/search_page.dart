@@ -161,6 +161,11 @@ class _SearchPageState extends State<SearchPage> {
                             index + 1,
                             searchResults[index],
                             fromSearch: true,
+                            items: getChipsFor(
+                              searchResults[index],
+                              searchTypes[activeIndex],
+                              searchValue,
+                            ),
                           );
                         }),
                       );
@@ -170,5 +175,58 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
     );
+  }
+
+  // function to get the dhips data for a country
+  List<dynamic> getChipsFor(
+    Country country,
+    SearchType searchType,
+    String query,
+  ) {
+    // getting the countries provider
+    final CountriesProvider countriesProvider =
+        Provider.of<CountriesProvider>(context, listen: false);
+
+    // if search type is country then just return an empty list
+    switch (searchType) {
+      case SearchType.country:
+        {
+          // getting the matching countries
+          final List matchingCountries =
+              countriesProvider.getMatchingCountryNames(country, query);
+
+          return matchingCountries;
+        }
+      case SearchType.currency:
+        {
+          // getting the currencies for the current country that matches
+          final List<String> matchingCurrencies =
+              countriesProvider.getMatchingCurrencies(country, query);
+
+          // returning the currencies
+          return matchingCurrencies;
+        }
+      case SearchType.capital:
+        {
+          // getting the matching capitals
+          final List matchingCapitals =
+              countriesProvider.getMatchingCapitals(country, query);
+
+          return matchingCapitals;
+        }
+      case SearchType.language:
+        {
+          // getting the matching languages
+          final List matchingLanguages =
+              countriesProvider.getMatchingLanguages(country, query);
+
+          // returning the matching languages
+          return matchingLanguages;
+        }
+      default:
+        {
+          return [];
+        }
+    }
   }
 }

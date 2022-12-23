@@ -49,10 +49,9 @@ class _OptionState extends State<Option> {
               horizontal: 12,
             ),
             decoration: BoxDecoration(
-              color:
-                  isSelected ? Theme.of(context).colorScheme.secondary : null,
+              color: isSelected ? Theme.of(context).primaryColor : null,
               border: Border.all(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).primaryColor,
                 width: 1,
               ),
               borderRadius: BorderRadius.circular(10),
@@ -60,7 +59,7 @@ class _OptionState extends State<Option> {
             child: Text(
               widget.textValue,
               style: TextStyle(
-                color: isSelected ? Colors.black : Colors.white,
+                color: isSelected ? Colors.white : Colors.black,
               ),
             ),
           ),

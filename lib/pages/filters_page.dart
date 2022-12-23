@@ -16,7 +16,6 @@ class FiltersPage extends StatelessWidget {
         Provider.of<CountriesProvider>(context, listen: false);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0,
         title: const Text(
@@ -35,7 +34,13 @@ class FiltersPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Heading('Continents'),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Heading(
+                      'Continents',
+                      color: Colors.black,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -46,7 +51,10 @@ class FiltersPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Heading('Sub regions'),
+                    const Heading(
+                      'Sub regions',
+                      color: Colors.black,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -76,34 +84,40 @@ class FiltersPage extends StatelessWidget {
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(context).primaryColor,
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             'Total results: ${value.getFilteredCountries().length}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
-                      InkWell(
-                        customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        onTap: () {
-                          value.clearFilters();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
+                      Tooltip(
+                        message: 'Clear all filters',
+                        child: InkWell(
+                          customBorder: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
-                            color: Theme.of(context).colorScheme.secondary,
                           ),
-                          child: const Icon(
-                            Icons.clear,
-                            color: Colors.black,
-                            size: 18,
+                          onTap: () {
+                            value.clearFilters();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            child: const Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                              size: 18,
+                            ),
                           ),
                         ),
                       ),

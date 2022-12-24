@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
     // theme of the app
     final ThemeData theme = ThemeData(
       fontFamily: 'Ubuntu',
-      primaryColor: const Color(0xFF0B5687),
+      primaryColor: const Color(0xFF624422),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF0B5687),
+        backgroundColor: Color(0xFF624422),
         titleTextStyle: TextStyle(
           fontFamily: 'Ubuntu',
           fontSize: 16,
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
-            secondary: const Color(0xFFF9D162),
+            secondary: const Color(0xFFFBE0AA),
           ),
         ),
         home: const HomePage(),

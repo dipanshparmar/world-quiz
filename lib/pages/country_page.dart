@@ -61,7 +61,7 @@ class CountryPage extends StatelessWidget {
                   if (country.area != null && country.area! > 0)
                     InfoSection(
                       heading: 'Area',
-                      items: ['${country.area} Sq. Km.'],
+                      items: ['${country.area} Km\u00B2'],
                     ),
                   if (country.borders != null && country.borders!.isNotEmpty)
                     Consumer<CountriesProvider>(

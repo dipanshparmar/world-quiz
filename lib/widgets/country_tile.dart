@@ -124,7 +124,8 @@ class CountryTile extends StatelessWidget {
                   subregionsFilter.contains(currentCountrySubregion))
                 _buildCustomChip(
                   currentCountrySubregion,
-                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.black,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
             ],
           ),
@@ -175,8 +176,7 @@ class CountryTile extends StatelessWidget {
               right: e.key == activeContinents.length - 1 ? 0 : 10.0),
           child: _buildCustomChip(
             e.value,
-            textColor: Colors.black,
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).primaryColor,
           ),
         );
       }).toList(),

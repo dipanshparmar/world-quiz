@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/providers.dart';
 import './pages.dart';
 import '../utils/helpers/database_helper.dart';
+import '../utils/enums/enums.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({super.key});
@@ -35,6 +36,15 @@ class _QuestionPageState extends State<QuestionPage> {
 
   // state to store whether the results are being saved in the DB or not
   bool isSaving = false;
+
+  // function to get the flag from the question format i.e. "[flg]" something something
+  String getFlag(String question) {
+    // splitting the string by spaces
+    List<String> splitted = question.split(' ');
+
+    // removing the " from the first item and returning
+    return splitted[0].replaceAll('"', '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +145,7 @@ class _QuestionPageState extends State<QuestionPage> {
                 final String question = questionData['question'];
                 final List<String> choices = questionData['choices'];
                 final String answer = questionData['answer'];
+                final QuizType quizType = questionData['type'];
 
                 return SizedBox(
                   width: double.infinity,
@@ -142,10 +153,23 @@ class _QuestionPageState extends State<QuestionPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // if quiz type is flag
+                      if (quizType == QuizType.flag)
+                        Text(
+                          getFlag(question),
+                          style: const TextStyle(
+                            fontSize: 30,
+                          ),
+                        ),
+                      if (quizType == QuizType.flag)
+                        const SizedBox(
+                          height: 5,
+                        ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
-                          question,
+                          // removing the flag from the question and then showing
+                          question.split(' ').sublist(1).join(' '),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,

@@ -90,6 +90,7 @@ class QuizProvider with ChangeNotifier {
       'question': '',
       'choices': [],
       'answer': '',
+      'type': quizType,
     };
 
     // validating the type

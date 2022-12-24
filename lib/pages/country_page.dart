@@ -132,6 +132,16 @@ class CountryPage extends StatelessWidget {
                       heading: 'Population',
                       items: [country.population],
                     ),
+                  if (country.region != null)
+                    InfoSection(
+                      heading: 'Region',
+                      items: [country.region],
+                    ),
+                  if (country.subregion != null)
+                    InfoSection(
+                      heading: 'Sub region',
+                      items: [country.subregion],
+                    ),
                   if (country.coatOfArms != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,16 +160,6 @@ class CountryPage extends StatelessWidget {
                           height: 20,
                         )
                       ],
-                    ),
-                  if (country.region != null)
-                    InfoSection(
-                      heading: 'Region',
-                      items: [country.region],
-                    ),
-                  if (country.subregion != null)
-                    InfoSection(
-                      heading: 'Sub region',
-                      items: [country.subregion],
                     ),
                   if (country.car != null &&
                       country.car!.isNotEmpty &&

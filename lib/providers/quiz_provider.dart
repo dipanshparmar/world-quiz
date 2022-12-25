@@ -18,6 +18,9 @@ class QuizProvider with ChangeNotifier {
     'Sub region': QuizType.subRegion,
   };
 
+  // to hold the total questions
+  int totalQuestion = 10; // defaults to 10
+
   // active quiz types, defaults to capital, continent, flag, sub region, border
   final List<QuizType> _activeQuizTypes = [
     QuizType.capital,
@@ -494,5 +497,17 @@ class QuizProvider with ChangeNotifier {
 
     // returning the question data
     return questionData;
+  }
+
+  // getter for the total questions
+  int getTotalQuestions() {
+    return totalQuestion;
+  }
+
+  // setter to set the total questions
+  void setTotalQuestions(int questions) {
+    totalQuestion = questions;
+
+    notifyListeners();
   }
 }

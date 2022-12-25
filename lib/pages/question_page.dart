@@ -19,9 +19,6 @@ class _QuestionPageState extends State<QuestionPage> {
   // question no. Starts from 1
   int currentQuestion = 1;
 
-  // total questions
-  final int totalQuestions = 10;
-
   // state whether to show the colors or not
   bool clicked = false;
 
@@ -51,6 +48,10 @@ class _QuestionPageState extends State<QuestionPage> {
 
   @override
   Widget build(BuildContext context) {
+    // grabbing the total question
+    final int totalQuestions =
+        Provider.of<QuizProvider>(context, listen: false).getTotalQuestions();
+
     return WillPopScope(
       onWillPop: () async {
         return await showDialog(

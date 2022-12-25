@@ -25,7 +25,7 @@ class ResultPage extends StatelessWidget {
     } else if (inTenScale == 3) {
       return 'Got 30% of the answers correct.';
     } else if (inTenScale == 4) {
-      return 'Nice! Got 40% of the answers correct';
+      return 'Nice! Got 40% of the answers correct.';
     } else if (inTenScale == 5) {
       return 'Woohoo! You got half of the answers correct.';
     } else if (inTenScale == 6) {

@@ -61,31 +61,65 @@ class ResultPage extends StatelessWidget {
       body: SizedBox(
         width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('You Scored'),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              '$correctAnswers / $totalQuestions',
-              style: const TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('You Scored'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    '$correctAnswers / $totalQuestions',
+                    style: const TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // if we have a message then show it
+                  if (message != null)
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  if (message != null)
+                    Text(
+                      message,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                ],
               ),
             ),
-            // if we have a message then show it
-            if (message != null)
-              const SizedBox(
-                height: 20,
-              ),
-            if (message != null)
-              Text(
-                message,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: InkWell(
+                onTap: () {
+                  // popping the curret page
+                  Navigator.of(context).pop();
+                },
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    'Go to Quiz Page',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
+            )
           ],
         ),
       ),

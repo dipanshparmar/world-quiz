@@ -16,7 +16,9 @@ class ResultPage extends StatelessWidget {
     int inTenScale = percentage ~/ 10;
 
     // returning a message according to the ten scale
-    if (inTenScale == 1) {
+    if (inTenScale == 0) {
+      return 'Why not try again after a revision?';
+    } else if (inTenScale == 1) {
       return 'That\'s a good start.';
     } else if (inTenScale == 2) {
       return 'Climbing the stairs just like that.';

@@ -38,12 +38,15 @@ class _QuestionPageState extends State<QuestionPage> {
   bool isSaving = false;
 
   // function to get the flag from the question format i.e. "[flg]" something something
-  String getFlag(String question) {
+  Map<String, String> getFlagData(String question) {
     // splitting the string by spaces
     List<String> splitted = question.split(' ');
 
-    // removing the " from the first item and returning
-    return splitted[0].replaceAll('"', '');
+    // returning the flag and the question
+    return {
+      'flag': splitted[0].replaceAll('"', ''),
+      'question': splitted.sublist(1).join(' '),
+    };
   }
 
   @override
@@ -156,7 +159,7 @@ class _QuestionPageState extends State<QuestionPage> {
                       // if quiz type is flag
                       if (quizType == QuizType.flag)
                         Text(
-                          getFlag(question),
+                          getFlagData(question)['flag']!,
                           style: const TextStyle(
                             fontSize: 30,
                           ),
@@ -168,8 +171,10 @@ class _QuestionPageState extends State<QuestionPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
-                          // removing the flag from the question and then showing
-                          question.split(' ').sublist(1).join(' '),
+                          quizType == QuizType.flag
+                              ? getFlagData(question)[
+                                  'question']! // removing the flag from the question and then showing
+                              : question, // if not quiz type flag then show the complete question
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,

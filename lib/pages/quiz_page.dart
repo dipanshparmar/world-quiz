@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import '../utils/enums/enums.dart';
 import '../providers/providers.dart';
 import '../pages/pages.dart';
+import '../widgets/widgets.dart';
 
 class QuizPage extends StatelessWidget {
   const QuizPage({super.key});
 
   static const String routeName = '/quiz-page';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,30 +23,74 @@ class QuizPage extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        'Are you sure you are ready for the hardest quiz of this world?',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: _buildQuizTypes(context),
-                    ),
-                  ],
+                      const Heading(
+                        'Please choose the question types to include:',
+                        color: Colors.black,
+                        paddingLeft: 0,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      _buildQuizTypes(context),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Heading(
+                        'Please select the questions count:',
+                        color: Colors.black,
+                        paddingLeft: 0,
+                      ),
+                      Consumer<QuizProvider>(
+                        builder: ((context, value, child) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Slider(
+                                  value: value.getTotalQuestions().toDouble(),
+                                  min: 10,
+                                  max: 50,
+                                  divisions: 8,
+                                  activeColor: Theme.of(context).primaryColor,
+                                  inactiveColor: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(.3),
+                                  onChanged: ((count) {
+                                    value.setTotalQuestions(count.toInt());
+                                  }),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 10,
+                                ),
+                                child: Text(
+                                  '${value.getTotalQuestions()}',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -140,7 +184,6 @@ class QuizPage extends StatelessWidget {
         return Wrap(
           spacing: 5,
           runSpacing: 5,
-          alignment: WrapAlignment.center,
           children: quizTypes.entries.map((e) {
             // deciding that whether the current type is active or not
             final bool isActive = activeQuizTypes.contains(e.value);

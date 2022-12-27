@@ -6,10 +6,12 @@ class InfoSection extends StatelessWidget {
     Key? key,
     required this.heading,
     required this.items,
+    this.leading,
     this.clickHandlers,
     this.includeSizedbox = true,
   }) : super(key: key);
 
+  final Widget? leading;
   final String heading;
   final List items;
   final List<Function>? clickHandlers;
@@ -27,7 +29,18 @@ class InfoSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Heading(heading),
+        Padding(
+          padding: EdgeInsets.only(left: leading != null ? 20 : 0),
+          child: Row(
+            children: [
+              if (leading != null) leading!,
+              Heading(
+                heading,
+                paddingLeft: leading != null ? 10 : null,
+              ),
+            ],
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),

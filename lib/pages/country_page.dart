@@ -60,6 +60,11 @@ class CountryPage extends StatelessWidget {
                 children: [
                   if (country.area != null && country.area! > 0)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.crop_square,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Area',
                       items: ['${country.area} Km\u00B2'],
                     ),
@@ -67,6 +72,11 @@ class CountryPage extends StatelessWidget {
                     Consumer<CountriesProvider>(
                       builder: ((context, value, child) {
                         return InfoSection(
+                          leading: const Icon(
+                            Icons.border_style,
+                            color: Colors.white,
+                            size: 16,
+                          ),
                           heading: 'Border(s)',
                           items: country.borders!.map((code) {
                             // getting the country by code
@@ -92,18 +102,33 @@ class CountryPage extends StatelessWidget {
                     ),
                   if (country.capitals != null && country.capitals!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.business,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Capital(s)',
                       items: country.capitals!,
                     ),
                   if (country.continents != null &&
                       country.continents!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.public,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Continent(s)',
                       items: country.continents!,
                     ),
                   if (country.currencies != null &&
                       country.currencies!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.attach_money,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Currencies',
                       items: country.currencies!.values.map((e) {
                         // final currency string
@@ -124,21 +149,41 @@ class CountryPage extends StatelessWidget {
                   if (country.languages != null &&
                       country.languages!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.language,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Language(s)',
                       items: country.languages!.values.toList(),
                     ),
                   if (country.population != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.people,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Population',
                       items: [country.population],
                     ),
                   if (country.region != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.area_chart,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Region',
                       items: [country.region],
                     ),
                   if (country.subregion != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.landscape,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Sub region',
                       items: [country.subregion],
                     ),
@@ -165,6 +210,11 @@ class CountryPage extends StatelessWidget {
                       country.car!.isNotEmpty &&
                       country.car!.containsKey('side'))
                     InfoSection(
+                      leading: const Icon(
+                        Icons.time_to_leave,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Car side',
                       items: [country.car!['side']],
                     ),
@@ -177,6 +227,11 @@ class CountryPage extends StatelessWidget {
                           .toList()
                           .isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.tag,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Car signs',
                       items: (country.car!['signs'] as List).map((e) {
                         return e;
@@ -188,6 +243,11 @@ class CountryPage extends StatelessWidget {
                       ((country.demonyms!['eng'] as Map).containsKey('f') ||
                           (country.demonyms!['eng'] as Map).containsKey('m')))
                     InfoSection(
+                      leading: const Icon(
+                        Icons.emoji_people,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Demonyms',
                       items: [
                         if (country.demonyms!['eng'].containsKey('f'))
@@ -198,11 +258,21 @@ class CountryPage extends StatelessWidget {
                     ),
                   if (country.fifa != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.sports_soccer,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Fifa',
                       items: [country.fifa],
                     ),
                   if (country.gini != null && country.gini!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.price_change,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Gini',
                       items: country.gini!.keys.map((e) {
                         return '${country.gini![e]} ($e)';
@@ -210,6 +280,11 @@ class CountryPage extends StatelessWidget {
                     ),
                   if (country.idd != null && country.idd!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.phone,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'IDD prefix',
                       items: (country.idd!['suffixes'] as List).map((e) {
                         // getting the root
@@ -221,32 +296,62 @@ class CountryPage extends StatelessWidget {
                     ),
                   if (country.independent != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.flag,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Independent',
                       items: [country.independent == true ? 'Yes' : 'No'],
                     ),
                   if (country.landLocked != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.lock,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Land locked',
                       items: [country.landLocked == true ? 'Yes' : 'No'],
                     ),
                   if (country.latLng != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.place,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Lat Lng',
                       items: ['${country.latLng!.lat}, ${country.latLng!.lng}'],
                     ),
                   if (country.timezones != null &&
                       country.timezones!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.schedule,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Timezone(s)',
                       items: country.timezones!,
                     ),
                   if (country.tlds != null && country.tlds!.isNotEmpty)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.web,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'Top level domain(s)',
                       items: country.tlds!,
                     ),
                   if (country.unMember != null)
                     InfoSection(
+                      leading: const Icon(
+                        Icons.groups,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                       heading: 'UN member',
                       items: [country.unMember == true ? 'Yes' : 'No'],
                     )

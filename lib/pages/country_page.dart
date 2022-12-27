@@ -61,7 +61,7 @@ class CountryPage extends StatelessWidget {
                   if (country.area != null && country.area! > 0)
                     InfoSection(
                       leading: const Icon(
-                        Icons.crop_square,
+                        Icons.grass,
                         color: Colors.white,
                         size: 16,
                       ),

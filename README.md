@@ -1,16 +1,10 @@
-# countries
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshots
+![Screenshot_1704092812](https://github.com/dipanshparmar/world-quiz/assets/49204837/ea31cb06-7c2e-45c5-ab31-3a063d357d4a)
+![Screenshot_1704092794](https://github.com/dipanshparmar/world-quiz/assets/49204837/16379a41-8619-44d3-a19b-69fdb1150c12)
+![Screenshot_1704092767](https://github.com/dipanshparmar/world-quiz/assets/49204837/8ab104f5-7e41-4ff7-99e8-529d690e597d)
+![Screenshot_1704092804](https://github.com/dipanshparmar/world-quiz/assets/49204837/67b15e0b-c4e8-46ff-9114-daf5f29ee423)
+![Screenshot_1704092746](https://github.com/dipanshparmar/world-quiz/assets/49204837/8645fd68-81ba-48d1-932a-2377bb19e1b5)
+![Screenshot_1704092779](https://github.com/dipanshparmar/world-quiz/assets/49204837/7a35150e-db2e-4db9-822a-360d0275544b)
+![Screenshot_1704092774](https://github.com/dipanshparmar/world-quiz/assets/49204837/ea2bfb37-d523-480b-9cfd-fb46f327b6b6)
+![Screenshot_1704092818](https://github.com/dipanshparmar/world-quiz/assets/49204837/824aad2b-4b75-4be3-8f03-25ab042843e7)
+![Screenshot_1704092729](https://github.com/dipanshparmar/world-quiz/assets/49204837/044838b9-ffe0-44f5-bc38-4fd830a0b99e)
